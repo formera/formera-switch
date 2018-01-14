@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Formera WiFi Switch</title>
+
+    <link href="main.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <img style="position:absolute; left:10px; top:5px" src="formera_logo50x50.png">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.htm">Wifi Switch</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-right">
+          <ul class="nav navbar-nav">
+            <li><a href="index.htm">SWITCH</a></li>
+            <li><a href="network.htm">NETWORK</a></li>
+            <li><a href="mqtt.htm">MQTT</a></li>
+            <li class="active"><a href="settings.htm">SETTINGS</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+	<!-- *****************************************************************************************************************
+	 BLUE WRAP
+	 ***************************************************************************************************************** -->
+	<div id="blue">
+	    <div class="container">
+			<div class="row">
+				<h3>Advanced settings.</h3>
+			</div><!-- /row -->
+	    </div> <!-- /container -->
+	</div><!-- /blue -->
+  <!-- *****************************************************************************************************************
+   TITLE & CONTENT
+   ***************************************************************************************************************** -->
+
+   <div class="container mt">
+    <div class="row">
+      <div class="col-lg-10 col-lg-offset-1 centered">
+      </div>
+
+      <div class="col-lg-5 col-lg-offset-1">
+        <div class="spacing"></div>
+        <h4>Current firmware</h4>
+        <p id="fw_version"></p>
+
+        <div class="fileUpload btn btn-theme">
+            <span>Get FirmwareFile</span>
+            <input type="file" class="upload" name="firmwarefile" id="firmware_file"/>
+        </div>
+        <span id="sel-file"></span>
+        <br>
+        <input value="Update Firmware" type="submit" class="btn btn-theme" onclick="updateFirmware()">
+        <br>
+        <br>
+        <h4>Device LED lights</h4>
+        <input value="Turn ON" type="submit" class="btn btn-theme" onclick="updateLedSettings(false)">
+        <input value="Turn OFF" type="submit" class="btn btn-theme" onclick="updateLedSettings(true)">
+        <br>
+        <h4>Device names</h4>
+        <div class="input_data">
+            <label for="hostname">Hostname: </label>
+            <input type="text" name="hostname" id="new_hostname">
+            <br /><label for="devicename">Name: </label>
+            <input type="text" name="devicename" id="new_devicename">
+            <input type="submit" value="Update" style="position:relative; left:-8em; width: 80px" class="btn btn-theme" onclick="setDeviceNames()"/>
+        </div> <! --/input_data -->
+
+        <h4>Sensors</h4>
+        <br /><label for="use_sensors">Use sensors: </label>
+        <select id="new_SensorType" style="width: 152px">
+          <option value="">none</option>
+          <option value="DHT22">TempHum</option>
+          <option value="DS18B20">Temperature</option>
+          <option value="YL69">Soil moisture</option>
+        </select>
+        <br>
+        <input type="submit" value="Save" style="position:relative; width: 80px" class="btn btn-theme" onclick="setSensor()"/>
+        <br>
+        <br>
+
+        <h4>Reset Device</h4>
+        <input value="Reboot device" type="submit" class="btn btn-theme" onclick="requestReset()">
+        <input value="Factory reset" type="submit" class="btn btn-theme" onclick="requestFactoryReset()">
+      </div>
+
+      <div class="col-lg-4 col-lg-offset-1">
+        <div class="spacing"></div>
+
+        <div class="hline"></div>
+          <h4>Device information</h4>
+          <div id="devinfo_chip_id"></div>
+          <div id="devinfo_wifi_connects"></div>
+          <div id="devinfo_free_memory"></div>
+          <div id="devinfo_mqtt_status"></div>
+          <div id="devinfo_apMode"></div>
+          <br>
+          <h4>Settings</h4>
+          <p id="settings_silent_mode"></p>
+          <p id="settings_static_ip"></p>
+          <p id="settings_hostname"></p>
+          <p id="settings_gateway"></p>
+          <br>
+          <h4>Sensors</h4>
+          <p id="settings_sensortype"></p>
+          <p id="devinfo_sensorvalid"></p>
+          <p id="devinfo_sensortemperature"></p>
+          <p id="devinfo_sensorhumidity"></p>
+
+
+      </div>
+
+    </div><! --/row -->
+   </div><! --/container -->
+
+  <!-- *****************************************************************************************************************
+   FOOTER
+   ***************************************************************************************************************** -->
+   <div id="footerwrap">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <h4>About</h4>
+          <div class="hline-w"></div>
+            <p>We develop products with open rest API and MQTT support so our products can be used in any SmartHome application or system of choice. Our vison is to make any intelligent SmartHome secure and affordable with high quality products.</p>
+        </div>
+        <div class="col-lg-4">
+          <h4>Contact information</h4>
+          <div class="hline-w"></div>
+          <p>
+            <p><b>Website:</b> <a href="http://formera.net">  http://formera.net</a></p>
+            <p><b>Webshop:</b> <a href="http://shop.formera.net">http://shop.formera.net</a></p>
+            <p><b>email:</b> sales@formera.net</p>
+          </p>
+        </div>
+        <div class="col-lg-4">
+          <h4>Our Bunker</h4>
+          <div class="hline-w"></div>
+          <p>
+            Fässbergsgatan 61F<br/>
+            431 69 Mölndal<br/>
+            Sweden
+          </p>
+        </div>
+
+      </div><! --/row -->
+    </div><! --/container -->
+   </div><! --/footerwrap -->
+
+    <script src="jquery.min.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+
+    var prefix = "";
+    //var prefix = "http://10.0.0.54";    //for dev
+    var defaultDeviceName = "";
+    var defaultHostName = "";
+    var defaultSensorType = "";
+
+    $.getJSON(prefix + '/api/settings', function(json) {
+      document.getElementById("settings_silent_mode").innerHTML = '<p><b>Silent mode: </b>' + json.silent_mode + '</p>';
+      document.getElementById("settings_static_ip").innerHTML = '<p><b>Static IP: </b>' + json.static_ip + '</p>';
+      document.getElementById("settings_hostname").innerHTML = '<p><b>Hostname: </b>' + json.hostname + '</p>';
+      document.getElementById("settings_gateway").innerHTML = '<p><b>Gateway: </b>' + json.gateway + '</p>';
+      document.getElementById("settings_sensortype").innerHTML = '<p><b>Sensortype: </b>' + json.sensor0_type + '</p>';
+
+      defaultDeviceName = json.name
+      defaultHostName = json.hostname;
+      defaultSensorType = json.sensor0_type;
+    });
+
+    $.getJSON(prefix + '/api/device', function(json) {
+      $('#fw_version').text(json.fw_version);
+      document.getElementById("devinfo_chip_id").innerHTML = '<p><b>Chip ID: </b>' + json.chip_id + '</p>';
+      document.getElementById("devinfo_wifi_connects").innerHTML = '<p><b>Wifi Connects: </b>' + json.wifi_connects + '</p>';
+      document.getElementById("devinfo_free_memory").innerHTML = '<p><b>Free memory: </b>' + json.free_memory + '</p>';
+      document.getElementById("devinfo_mqtt_status").innerHTML = '<p><b>MQTT Status: </b>' + json.mqtt_status + '</p>';
+      document.getElementById("devinfo_apMode").innerHTML = '<p><b>AP mode: </b>' + json.apMode + '</p>';
+
+      document.getElementById("devinfo_sensorvalid").innerHTML = '<p><b>Sensor valid: </b>' + json.sensors[0].valid + '</p>';
+      document.getElementById("devinfo_sensortemperature").innerHTML = '<p><b>Temperature: </b>' + json.sensors[0].temperature + '</p>';
+      document.getElementById("devinfo_sensorhumidity").innerHTML = '<p><b>Humidity: </b>' + json.sensors[0].humidity + '</p>';
+
+      LoadDefaults();
+    });
+
+
+    function updateFirmware() {
+      var files=document.getElementById('firmware_file').files;
+      var file=files[0];
+
+      if( files.length == 0 ){
+          alert("No file selected");
+          return false;
+      }
+
+      var file_length = file.name.length;
+      var file_extension = file.name.substring(file_length-4, file_length);
+
+      if (file_extension != ".bin") {
+        alert("Please select correct firmware file");
+        return false;
+      }
+
+      var fd = new FormData();
+      fd.append("fileToUpload", file);
+
+      $.ajax({
+         url: prefix + '/api/update',
+         type: "POST",
+         data: fd,
+         processData: false,
+         contentType: false,
+         success: function(response, status) {
+           console.log(status);
+         },
+         error: function(jqXHR, textStatus, errorMessage) {
+             console.log(errorMessage); // Optional
+         }
+      });
+      location.reload();
+    }
+
+    function updateLedSettings(silent_mode){
+      var newDeviceName = document.getElementById('devicename').value;
+      xhr = new XMLHttpRequest();
+      var url = prefix + '/api/settings';
+      xhr.open("PUT", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+              var resp = JSON.parse(xhr.responseText);
+              console.log(resp);
+          }
+          location.reload();
+      }
+      var data = JSON.stringify({'silent_mode':silent_mode});
+      xhr.send(data);
+    }
+
+    function setDeviceNames(){
+      var newHostName = document.getElementById('new_hostname').value;
+      var newDeviceName = document.getElementById('new_devicename').value;
+
+      if (newHostName === "") {
+        alert("Please enter Hostname");
+        return false;
+      }
+
+      if (newDeviceName === "") {
+        alert("Please enter DeviceName");
+        return false;
+      }
+
+      xhr = new XMLHttpRequest();
+      var url = prefix + '/api/settings';
+      xhr.open("PUT", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+              var resp = JSON.parse(xhr.responseText);
+              console.log(resp);
+          }
+          location.reload();
+      }
+
+      var data = JSON.stringify({'hostname':newHostName, 'name':newDeviceName});
+      xhr.send(data);
+
+    }
+
+    function LoadDefaults(){
+      document.getElementById("new_devicename").value =   defaultDeviceName;
+      document.getElementById("new_hostname").value =   defaultHostName;
+      document.getElementById("new_SensorType").value =   defaultSensorType;
+      document.getElementById("new_SensorType").disabled =   false;
+    }
+
+    function setSensor(){
+
+      var new_SensorType = document.getElementById('new_SensorType').value;
+      xhr = new XMLHttpRequest();
+      var url = prefix + '/api/settings';
+      xhr.open("PUT", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+              var resp = JSON.parse(xhr.responseText);
+              console.log(resp);
+          }
+      location.reload();
+      }
+
+      var data = JSON.stringify({'sensor0_type':new_SensorType});
+      console.log(data);
+      xhr.send(data);
+    } // setNetworkSettings
+
+    function requestReset(){
+      xhr = new XMLHttpRequest();
+      var url = prefix + '/api/requestReset';
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+              var resp = JSON.parse(xhr.responseText);
+              console.log(resp);
+          }
+          location.reload();
+      }
+      xhr.send();
+    }
+
+    function requestFactoryReset(){
+      xhr = new XMLHttpRequest();
+      var url = prefix + '/api/requestFactoryReset';
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+              var resp = JSON.parse(xhr.responseText);
+              console.log(resp);
+          }
+      }
+      xhr.send();
+      requestReset();
+    }
+
+    var uri = window.location.toString();
+    if (uri.indexOf("?") > 0) {
+        var clean_uri = uri.substring(0, uri.indexOf("?"));
+        window.history.replaceState({}, document.title, clean_uri);
+    }
+
+    $(document).ready(function(){
+    $('input[type="file"]').change(function(e){
+        var fileName = e.target.files[0].name;
+        document.getElementById('sel-file').innerHTML = fileName ;
+
+    });
+});
+
+</script>
+  </body>
+</html>

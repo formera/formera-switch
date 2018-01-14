@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Formera WiFi Switch</title>
+
+    <link href="main.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <img style="position:absolute; left:10px; top:5px" src="formera_logo50x50.png">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.htm">Wifi Switch</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-right">
+          <ul class="nav navbar-nav">
+            <li><a href="index.htm">SWITCH</a></li>
+            <li><a href="network.htm">NETWORK</a></li>
+            <li class="active"><a href="mqtt.htm">MQTT</a></li>
+            <li><a href="settings.htm">SETTINGS</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+	<!-- *****************************************************************************************************************
+	 BLUE WRAP
+	 ***************************************************************************************************************** -->
+	<div id="blue">
+	    <div class="container">
+			<div class="row">
+				<h3>MQTT and cloud configuration.</h3>
+			</div><!-- /row -->
+	    </div> <!-- /container -->
+	</div><!-- /blue -->
+
+
+  	<!-- *****************************************************************************************************************
+  	 TITLE & CONTENT
+  	 ***************************************************************************************************************** -->
+
+  	 <div class="container mt">
+  	 	<div class="row">
+  		 	<div class="col-lg-10 col-lg-offset-1 centered">
+  		 	</div>
+
+  		 	<div class="col-lg-5 col-lg-offset-1">
+    			<div class="spacing"></div>
+          <h4>Cloud support</h4>
+          <p>To enable cloud support our devices use MQTT. This enable to use your devices on internet.</p>
+          <br>
+          <br>
+          <h4>MQTT settings:</h4>
+          <div class="input_data">
+            <label for="enable_mqtt">Enable MQTT: </label>
+            <select id="newMQTT_Enabled" style="width: 152px" onChange="validateMQTT(this.selectedIndex);">
+              <option value="false">false</option>
+              <option value="true">true</option>
+            </select>
+            <br /><label for="host">MQTT host: </label>
+            <input type="text" id="newMQTT_Host"/>
+            <br /><label for="port">Port: </label>
+            <input type="text" id="newMQTT_Port"/>
+            <br /><label for="user">User: </label>
+            <input type="text" id="newMQTT_User"/>
+            <br /><label for="Password">Password: </label>
+            <input type="password" id="newMQTT_Password"/>
+            <br /><label for="enable_mqtt">Secure: </label>
+            <select id="new_MQTT_Secure" style="width: 152px">
+              <option value="false">false</option>
+              <option value="true">true</option>
+            </select>
+            <input type="submit" value="Save" style="position:relative; left:-8em; width: 80px" class="btn btn-theme" onclick="setMQTTSettings()"/>
+          </div> <! --/input_data -->
+        </div> <! --/col-lg-5 col-lg-offset-1 -->
+
+  		 	<div class="col-lg-4 col-lg-offset-1">
+  			 	<div class="spacing"></div>
+  		 		<h4>MQTT status</h4>
+  		 		<div class="hline"></div>
+          <div id="status_mqtt_enabled"></div>
+          <div id="status_mqtt_host"></div>
+          <div id="status_mqtt_port"></div>
+          <div id="status_mqtt_user"></div>
+          <div id="status_mqtt_token"></div>
+          <div id="status_mqtt_secure"></div>
+          <br>
+  		 	</div>  <! --/col-lg-4 col-lg-offset-1 -->
+
+  	 	</div><! --/row -->
+  	 </div><! --/container -->
+
+  	<!-- *****************************************************************************************************************
+  	 FOOTER
+  	 ***************************************************************************************************************** -->
+  	 <div id="footerwrap">
+  	 	<div class="container">
+  		 	<div class="row">
+  		 		<div class="col-lg-4">
+  		 			<h4>About</h4>
+  		 			<div class="hline-w"></div>
+              <p>We develop products with open rest API and MQTT support so our products can be used in any SmartHome application or system of choice. Our vison is to make any intelligent SmartHome secure and affordable with high quality products.</p>
+  		 		</div>
+  		 		<div class="col-lg-4">
+  		 			<h4>Contact information</h4>
+  		 			<div class="hline-w"></div>
+  		 			<p>
+              <p><b>Website:</b> <a href="http://formera.net">  http://formera.net</a></p>
+              <p><b>Webshop:</b> <a href="http://shop.formera.net">http://shop.formera.net</a></p>
+              <p><b>email:</b> sales@formera.net</p>
+  		 			</p>
+  		 		</div>
+  		 		<div class="col-lg-4">
+  		 			<h4>Our Bunker</h4>
+  		 			<div class="hline-w"></div>
+  		 			<p>
+              Fässbergsgatan 61F<br/>
+              431 69 Mölndal<br/>
+              Sweden
+  		 			</p>
+  		 		</div>
+
+  		 	</div><! --/row -->
+  	 	</div><! --/container -->
+  	 </div><! --/footerwrap -->
+
+      <script src="jquery.min.js"></script>
+      <script src="main.js"></script>
+
+
+      <script>
+
+    var prefix = "";
+    //var prefix = "http://10.0.0.54";    //for dev
+    var defaultMQTT_Enabled = false;
+    var defaultMQTT_Host = "";
+    var defaultMQTT_Port = "";
+    var defaultMQTT_User = "";
+    var defaultMQTT_Secure = false;
+
+      $.getJSON(prefix + '/api/settings', function(json) {
+        defaultMQTT_Enabled = json.mqtt_enabled;
+        defaultMQTT_Host = json.mqtt_host + '';
+        defaultMQTT_Port = json.mqtt_port + '';
+        defaultMQTT_User = json.mqtt_user + '';
+        defaultMQTT_Secure = json.mqtt_secure;
+        document.getElementById("status_mqtt_enabled").innerHTML = '<p><b>MQTT enabled: </b>' + json.mqtt_enabled + '</p>';
+        document.getElementById("status_mqtt_host").innerHTML = '<p><b>Host: </b>' + json.mqtt_host + '</p>';
+        document.getElementById("status_mqtt_port").innerHTML = '<p><b>Port: </b>' + json.mqtt_port + '</p>';
+        document.getElementById("status_mqtt_user").innerHTML = '<p><b>User: </b>' + json.mqtt_user + '</p>';
+        document.getElementById("status_mqtt_token").innerHTML = '<p><b>Token: </b>' + json.mqtt_token + '</p>';
+        document.getElementById("status_mqtt_secure").innerHTML = '<p><b>MQTT Secure: </b>' + json.mqtt_secure + '</p>';
+        LoadDefaults();
+      });
+
+
+      function setMQTTSettings(){
+
+        var newMQTT_Enabled = document.getElementById('newMQTT_Enabled').value;
+        var newMQTT_Host = document.getElementById('newMQTT_Host').value;
+        var newMQTT_Port = document.getElementById('newMQTT_Port').value;
+        var newMQTT_User = document.getElementById('newMQTT_User').value;
+        var newMQTT_Password = document.getElementById('newMQTT_Password').value;
+        var newMQTT_Secure = document.getElementById('new_MQTT_Secure').value;
+
+        if (newMQTT_Enabled === "true") {
+          if (newMQTT_Host === "") {
+            alert("Please enter  a MQTT host");
+            return false;
+          }
+          if (newMQTT_Port === "") {
+            alert("Please enter  a MQTT port");
+            return false;
+          }
+          if (newMQTT_User === "") {
+            alert("Please enter  a MQTT user");
+            return false;
+          }
+          if (newMQTT_Password === "") {
+            alert("Please enter  a MQTT password");
+            return false;
+          }
+        }
+
+        xhr = new XMLHttpRequest();
+        var url = prefix + '/api/settings';
+        xhr.open("PUT", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var resp = JSON.parse(xhr.responseText);
+                console.log(resp);
+            }
+        location.reload();
+        }
+
+        if (newMQTT_Enabled === "true") {
+          var data = JSON.stringify({'mqtt_enabled':newMQTT_Enabled, 'mqtt_host':newMQTT_Host, 'mqtt_port': newMQTT_Port, 'mqtt_user': newMQTT_User, 'mqtt_token': newMQTT_Password, 'mqtt_secure': newMQTT_Secure});
+        } else {
+          var data = JSON.stringify({'mqtt_enabled':newMQTT_Enabled});
+        }
+        console.log(data);
+        xhr.send(data);
+      } // setNetworkSettings
+
+
+      function validateMQTT(useMQTT){
+        if (useMQTT === 0) {
+          document.getElementById("newMQTT_Host").disabled =   true;
+          document.getElementById("newMQTT_Port").disabled =   true;
+          document.getElementById("newMQTT_User").disabled =   true;
+          document.getElementById("newMQTT_Password").disabled =   true;
+          document.getElementById("new_MQTT_Secure").disabled =   true;
+          document.getElementById("newMQTT_Host").value = defaultMQTT_Host;
+          document.getElementById("newMQTT_Port").value = defaultMQTT_Port;
+          document.getElementById("newMQTT_User").value = defaultMQTT_User;
+          document.getElementById("new_MQTT_Secure").value = defaultMQTT_Secure;
+        } else {
+          document.getElementById("newMQTT_Host").disabled =   false;
+          document.getElementById("newMQTT_Port").disabled =   false;
+          document.getElementById("newMQTT_User").disabled =   false;
+          document.getElementById("newMQTT_Password").disabled =   false;
+          document.getElementById("new_MQTT_Secure").disabled =   false;
+        }
+      }
+
+      function LoadDefaults(){
+        document.getElementById("newMQTT_Enabled").value =   defaultMQTT_Enabled;
+        document.getElementById("newMQTT_Host").value =   defaultMQTT_Host;
+        document.getElementById("newMQTT_Port").value =   defaultMQTT_Port;
+        document.getElementById("newMQTT_User").value =   defaultMQTT_User;
+        document.getElementById("new_MQTT_Secure").value =   defaultMQTT_Secure;
+        if (defaultMQTT_Enabled === false) {
+          document.getElementById("newMQTT_Host").disabled =   true;
+          document.getElementById("newMQTT_Port").disabled =   true;
+          document.getElementById("newMQTT_User").disabled =   true;
+          document.getElementById("newMQTT_Password").disabled =   true;
+          document.getElementById("new_MQTT_Secure").disabled =   true;
+        } else {
+          document.getElementById("newMQTT_Host").disabled =   false;
+          document.getElementById("newMQTT_Port").disabled =   false;
+          document.getElementById("newMQTT_User").disabled =   false;
+          document.getElementById("newMQTT_Password").disabled =   false;
+          document.getElementById("new_MQTT_Secure").disabled =   false;
+        }
+      }
+
+  </script>
+    </body>
+  </html>

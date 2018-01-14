@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Formera WiFi Switch</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="main.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <img style="position:absolute; left:10px; top:5px" src="formera_logo50x50.png">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.htm">Wifi Switch</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-right">
+          <ul class="nav navbar-nav">
+            <li><a href="index.htm">SWITCH</a></li>
+            <li class="active"><a href="network.htm">NETWORK</a></li>
+            <li><a href="mqtt.htm">MQTT</a></li>
+            <li><a href="settings.htm">SETTINGS</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+
+	<!-- *****************************************************************************************************************
+	 BLUE WRAP
+	 ***************************************************************************************************************** -->
+	<div id="blue">
+	    <div class="container">
+			<div class="row">
+				<h3>Network configuration.</h3>
+			</div><!-- /row -->
+	    </div> <!-- /container -->
+	</div><!-- /blue -->
+
+	<!-- *****************************************************************************************************************
+	 TITLE & CONTENT
+	 ***************************************************************************************************************** -->
+
+	 <div class="container mt">
+	 	<div class="row">
+		 	<div class="col-lg-10 col-lg-offset-1 centered">
+		 	</div>
+
+		 	<div class="col-lg-5 col-lg-offset-1">
+        <div class="spacing"></div>
+        <h4 id="config_header"></h4>
+        <table id="networks" border="1">
+              <tr>
+                    <th>SSID</th>
+                    <th>Encryption</th>
+                    <th>Signal strength</th>
+              </tr>
+        </table>
+        <h4>Connect to network:</h4>
+        <div class="input_data">
+          <label for="network">Network: </label>
+          <input type="text" id="new_ssid">
+          <br /><label for="password">Password: </label>
+          <input type="password" id="new_password"/>
+          <input type="submit" value="Update" style="position:relative; left:-8em; width: 80px" class="btn btn-theme" onclick="setWifiCredentials()"/>
+        </div> <! --/input_data -->
+        <h4>Network settings:</h4>
+          <div class="input_data">
+            <label for="hostname">Hostname: </label>
+            <input type="text" id="new_hostname"/>
+            <br /><label for="ip_address">IP address: </label>
+            <input type="text" id="new_staticip"/>
+            <br /><label for="gateway">Gateway: </label>
+            <input type="text" id="new_gateway"/>
+            <br /><label for="subnet">Subnet: </label>
+            <input type="text" id="new_subnet"/>
+            <br /><label for="new_use_dhcp">Use DHCP: </label>
+            <select id="new_use_dhcp" style="width: 152px" onChange="validateDHCP(this.selectedIndex);">
+               <option value="false">false</option>
+               <option value="true">true</option>
+           </select>
+           <input type="submit" value="Save" style="position:relative; left:-8em; width: 80px" class="btn btn-theme" onclick="setNetworkSettings()"/>
+          </div> <! --/input_data -->
+      </div>  <! --/col-lg-5 col-lg-offset-1 -->
+
+		 	<div class="col-lg-4 col-lg-offset-1">
+			 	<div class="spacing"></div>
+		 		<h4>Network status</h4>
+		 		<div class="hline"></div>
+        <div id="nw_ssid"></div>
+        <div id="nw_signal_strength"></div>
+        <div id="nw_hostname"></div>
+        <div id="nw_ip"></div>
+        <div id="nw_gateway"></div>
+        <div id="nw_subnet"></div>
+        <div id="nw_mac"></div>
+        <div id="nw_use_dhcp"></div>
+        <br>
+        <h4 id="set_networkmode"></h4>
+        <input value="Set AP-mode" type="submit" class="btn btn-theme" onclick="setAPmode()">
+		 	</div> <! --/col-lg-4 col-lg-offset-1 -->
+
+	 	</div><! --/row -->
+	 </div><! --/container -->
+
+	<!-- *****************************************************************************************************************
+	 FOOTER
+	 ***************************************************************************************************************** -->
+	 <div id="footerwrap">
+	 	<div class="container">
+		 	<div class="row">
+		 		<div class="col-lg-4">
+		 			<h4>About</h4>
+		 			<div class="hline-w"></div>
+            <p>We develop products with open rest API and MQTT support so our products can be used in any SmartHome application or system of choice. Our vison is to make any intelligent SmartHome secure and affordable with high quality products.</p>
+		 		</div>
+		 		<div class="col-lg-4">
+		 			<h4>Contact information</h4>
+		 			<div class="hline-w"></div>
+		 			<p>
+            <p><b>Website:</b> <a href="http://formera.net">  http://formera.net</a></p>
+            <p><b>Webshop:</b> <a href="http://shop.formera.net">http://shop.formera.net</a></p>
+            <p><b>email:</b> sales@formera.net</p>
+		 			</p>
+		 		</div>
+		 		<div class="col-lg-4">
+		 			<h4>Our Bunker</h4>
+		 			<div class="hline-w"></div>
+		 			<p>
+            Fässbergsgatan 61F<br/>
+            431 69 Mölndal<br/>
+            Sweden
+		 			</p>
+		 		</div>
+		 	</div><! --/row -->
+	 	</div><! --/container -->
+	 </div><! --/footerwrap -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery.min.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+
+  var prefix = "";
+  //var prefix = "http://10.0.0.54";    //for dev
+  var espName = "";
+  var defaultHostName="Formera";
+  var defaultIP="0.0.0.0";
+  var defaultGateway="0.0.0.0";
+  var defaultSubnet="0.0.0.0";
+  var defaultUseDHCP=true;
+
+  $.getJSON(prefix + '/api/status', function(json) {
+    console.log("Got status");
+    console.log(json);
+    espName = json.name;
+    console.log("espName:", espName);
+  });
+
+  $.getJSON(prefix + '/api/device', function (json) {
+    // Set default values
+    defaultHostName=json.hostname;
+    defaultIP=json.ip_address;
+    defaultGateway=json.gateway;
+    defaultSubnet=json.subnet;
+
+    document.getElementById("nw_ssid").innerHTML = '<p><b>SSID: </b>' + json.ssid + '</p>';
+
+    document.getElementById("nw_signal_strength").innerHTML = '<p><b>Signal Strength: </b>' + json.signal_strength + '</p>';
+    document.getElementById("nw_hostname").innerHTML = '<p><b>Hostname: </b>' + json.hostname + '</p>';
+    document.getElementById("nw_ip").innerHTML = '<p><b>IP No: </b>' + json.ip_address + '</p>';
+    document.getElementById("nw_gateway").innerHTML = '<p><b>Gateway: </b>' + json.gateway + '</p>';
+    document.getElementById("nw_subnet").innerHTML = '<p><b>Subnet: </b>' + json.subnet + '</p>';
+    document.getElementById("nw_mac").innerHTML = '<p><b>MAC Address: </b>' + json.mac + '</p>';
+
+    if (json.apMode = false) {
+          $("#config_header").text("SoftAP configuration");
+
+    } else {
+          $("#config_header").text("WLAN configuration");
+          $("#set_networkmode").text("Leave current network: " + json.ssid);
+    }
+    });
+
+  function c(l){
+		document.getElementById('new_ssid').value=l.innerText||l.textContent;document.getElementById('new_password').focus();
+	}
+
+  $.getJSON(prefix + '/api/wifi/networks', function (json) {
+
+      var tr;
+      for (var i = 0; i < json.length; i++) {
+          tr = $('<tr/>');
+
+    tr.append("<td>" + "<a href='#' onclick='c(this)'>" + json[i].ssid + "</a> " + "</td>");
+          tr.append("<td>" + json[i].encryption + "</td>");
+          tr.append("<td>" + json[i].rssi + "</td>");
+          $("#networks").append(tr);
+      }
+  });
+
+    $.getJSON(prefix + '/api/settings', function(json) {
+      document.getElementById("nw_use_dhcp").innerHTML = '<p><b>Use DHCP: </b>' + json.use_dhcp + '</p>';
+      defaultUseDHCP = json.use_dhcp;
+      LoadDefaults();
+    });
+
+    function LoadDefaults(){
+      document.getElementById("new_hostname").value =   defaultHostName;
+      document.getElementById("new_use_dhcp").value =   defaultUseDHCP;
+
+      if (defaultUseDHCP === true) {
+        document.getElementById("new_staticip").disabled =   true;
+        document.getElementById("new_gateway").disabled =   true;
+        document.getElementById("new_subnet").disabled =   true;
+        document.getElementById("new_staticip").value =   "0.0.0.0";
+        document.getElementById("new_gateway").value =   "0.0.0.0";
+        document.getElementById("new_subnet").value =   "0.0.0.0";
+      } else {
+        document.getElementById("new_staticip").disabled =   false;
+        document.getElementById("new_gateway").disabled =   false;
+        document.getElementById("new_subnet").disabled =   false;
+        document.getElementById("new_staticip").value =   defaultIP;
+        document.getElementById("new_gateway").value =   defaultGateway;
+        document.getElementById("new_subnet").value =   defaultSubnet;
+      }
+    }
+
+    function validateDHCP(useDHCP){
+      if (useDHCP === 1) {
+        document.getElementById("new_staticip").disabled =   true;
+        document.getElementById("new_gateway").disabled =   true;
+        document.getElementById("new_subnet").disabled =   true;
+        document.getElementById("new_staticip").value =   "0.0.0.0";
+        document.getElementById("new_gateway").value =   "0.0.0.0";
+        document.getElementById("new_subnet").value =   "0.0.0.0";
+      } else {
+        document.getElementById("new_staticip").disabled =   false;
+        document.getElementById("new_gateway").disabled =   false;
+        document.getElementById("new_subnet").disabled =   false;
+        document.getElementById("new_staticip").value =   defaultIP;
+        document.getElementById("new_gateway").value =   defaultGateway;
+        document.getElementById("new_subnet").value =   defaultSubnet;
+      }
+    }
+
+    function ValidateIPaddress(ipaddress)
+    {
+     if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddress))
+      {
+        return (true)
+      }
+    return (false)
+    }
+
+    function requestReset(){
+      xhr = new XMLHttpRequest();
+      var url = prefix + '/api/requestReset';
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+              var resp = JSON.parse(xhr.responseText);
+              console.log(resp);
+          }
+      }
+      //var data = JSON.stringify({'name':newDeviceName});
+      xhr.send();
+    }
+
+    function setWifiCredentials(){
+      var newNewSSID = document.getElementById('new_ssid').value;
+      var newPassword = document.getElementById('new_password').value;
+
+      if (newNewSSID === "") {
+        alert("Please enter Wifi SSID");
+        return false;
+      }
+      if (newPassword === "") {
+        alert("Please enter a password");
+        return false;
+      }
+
+      xhr = new XMLHttpRequest();
+      var url = prefix + '/api/settings';
+      xhr.open("PUT", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+              var resp = JSON.parse(xhr.responseText);
+              console.log(resp);
+          }
+      }
+      var data = JSON.stringify({'ssid':newNewSSID, 'password':newPassword});
+      console.log(data);
+      xhr.send(data);
+      requestReset();
+    } // setWifiCredentials
+
+    function setNetworkSettings(){
+      var newHostname = document.getElementById('new_hostname').value;
+      var newStaticIP = document.getElementById('new_staticip').value;
+      var newGateway = document.getElementById('new_gateway').value;
+      var newSubnet = document.getElementById('new_subnet').value;
+      var newUseDHCP = document.getElementById('new_use_dhcp').value;
+
+      if (newHostname === "") {
+        alert("Please enter HostName");
+        return false;
+      }
+      if ( ValidateIPaddress(newStaticIP)=== false ) {
+        alert("Please enter a valid IP address");
+        return false;
+      }
+      if ( ValidateIPaddress(newGateway)=== false ) {
+        alert("Please enter a valid Gateway");
+        return false;
+      }
+      if ( ValidateIPaddress(newSubnet)=== false ) {
+        alert("Please enter a valid Subnet");
+        return false;
+      }
+
+      xhr = new XMLHttpRequest();
+      var url = prefix + '/api/settings';
+      xhr.open("PUT", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+              var resp = JSON.parse(xhr.responseText);
+              console.log(resp);
+          }
+      location.reload();
+      }
+      var data = JSON.stringify({'use_dhcp':newUseDHCP, 'hostname':newHostname, 'static_ip': newStaticIP, 'gateway': newGateway, 'subnet': newSubnet});
+      xhr.send(data);
+    } // setNetworkSettings
+
+    function setAPmode(){
+
+      xhr = new XMLHttpRequest();
+      var url = prefix + '/api/settings';
+      xhr.open("PUT", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+              var resp = JSON.parse(xhr.responseText);
+              console.log(resp);
+          }
+      location.reload();
+      }
+      var data = JSON.stringify({'ssid':''});
+      xhr.send(data);
+
+      requestReset();
+
+    }
+
+    var uri = window.location.toString();
+    if (uri.indexOf("?") > 0) {
+        var clean_uri = uri.substring(0, uri.indexOf("?"));
+        window.history.replaceState({}, document.title, clean_uri);
+    }
+
+</script>
+  </body>
+</html>
